@@ -9,11 +9,15 @@ This project opens a device (iOS) and web browser and
 
 Please ensure to add to the environment variables:
 PERFECTO_CLOUD (ex.: demo.perfectomobile.com)
+
 PERFECTO_CLOUD_USERNAME
+
 PERFECTO_CLOUD_PASSWORD
 
 ACR_Access_Key: Key to ACRCloud, get it at https://www.acrcloud.com, follow this guide: https://www.acrcloud.com/docs/tutorials/identify-music-by-sound/
+
 ACR_Host
+
 ACR_Secret
 
 Project_Path: where you store downloaded wav file and the .dylib file
