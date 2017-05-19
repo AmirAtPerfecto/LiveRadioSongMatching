@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+  <test name="Test">
+		<parameter name="platformName" value="iOS" />
+		<parameter name="platformVersion" value="9.2.1" />
+		<parameter name="manufacturer" value="Apple" />
+		<parameter name="model" value="iPhone-6" />
+		<parameter name="deviceName" value="61F28E0775D8B0B57388E72D176AFE91A6248B39" />
+		<parameter name="appID" value="com.clearchannel.iheartradio" />
+    <classes>
+      <class name="LiveRadioPackage.NewTest"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
