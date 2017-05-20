@@ -34,6 +34,7 @@ public class NewTest {
                 .build();
 		webDriver = Utils.getRemoteWebDriver("Windows", "10", "Chrome", "58", "1280x1024" );        
          reportiumClient = new ReportiumClientFactory().createPerfectoReportiumClient(perfectoExecutionContext);
+// Only for Mac!
          System.load(System.getenv().get("Project_Path")+ "libacrcloud_extr_tool.dylib");
 	} 
   @Test
