@@ -43,32 +43,36 @@ public class NewTest {
     	  reportiumClient.testStart("Live Radio", new TestContext("tag2", "tag3"));
     	  System.out.println("Yay");
 
+    	  // Load the website, get the details for the live stream there
     	  webDriver.get("http://kiss108.iheart.com/");
     	  webDriver.findElementByClassName("listen-live-svg").click();
+    	  
+    	  // Start recording from the device
     	  String audioFileRecording = PerfectoUtils.startAudioRecording(driver);
     	  Thread.sleep(20000);
-    	  String song = webDriver.findElementByClassName("player-song").getAttribute("title");
-    	  String artist = webDriver.findElementByClassName("player-artist").getAttribute("title");
+    	  
+    	  // Grab the meta data from the website
+    	  String songNameOnWeb = webDriver.findElementByClassName("player-song").getAttribute("title");
+    	  String artistNameOnWeb = webDriver.findElementByClassName("player-artist").getAttribute("title");
     	  PerfectoUtils.stopAudioRecording(driver);
     	  ReportingFileDownload.downloadAttachments();
     	  String songData = AudioFunctions.audioToText(audioFileRecording);
     	  System.out.println("Song Data: " +songData);
     	  System.out.println("Audio File: " +audioFileRecording);
 
-
-    	  if (songData.toLowerCase().contains(song))
-    		  System.out.println("Found Song! " +song);
-    	  else
-    		  System.out.println("Not Found Song! web:" +song);
-
-    	  if (songData.toLowerCase().contains(artist))
-    		  System.out.println("Found artist! " +artist);
-    	  else
-    		  System.out.println("Not Found artist! web:" +artist);
-  			
-  			
     	  
-    	 // String attribute3 = driver.findElementByName("//*[@name=\"MiniPlayerView-TitleLabel-UILabel\"]").getAttribute("text");
+    	  if (songData.toLowerCase().contains(songNameOnWeb.toLowerCase()))
+    		  System.out.println("Found Song! " +songNameOnWeb);
+    	  else
+    		  System.out.println("Not Found Song! web:" +songNameOnWeb);
+
+    	  if (songData.toLowerCase().contains(artistNameOnWeb.toLowerCase()))
+    		  System.out.println("Found artist! " +artistNameOnWeb);
+    	  else
+    		  System.out.println("Not Found artist! web:" +artistNameOnWeb);
+  			
+  			
+    	  // grab meta data from device
     	String songNameOnDevice = driver.findElementByXPath("//AppiumAUT/UIAApplication[1]/UIAWindow[1]/UIAElement[1]/UIAScrollView[1]/UIAElement[1]/UIAStaticText[1]").getText();  
     	String artistNameOnDevice = driver.findElementByXPath("//AppiumAUT/UIAApplication[1]/UIAWindow[1]/UIAElement[1]/UIAScrollView[1]/UIAElement[1]/UIAStaticText[2]").getText();
     	System.out.println("Song Name on Device:" +songNameOnDevice);  
