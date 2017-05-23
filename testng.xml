@@ -3,13 +3,20 @@
 <suite name="Suite">
   <test name="Test">
 		<parameter name="platformName" value="iOS" />
-		<parameter name="platformVersion" value="9.2.1" />
 		<parameter name="manufacturer" value="Apple" />
+<!-- 
+		<parameter name="platformVersion" value="9.2.1" />
 		<parameter name="model" value="iPhone-6" />
 		<parameter name="deviceName" value="61F28E0775D8B0B57388E72D176AFE91A6248B39" />
+ -->
+
+		<parameter name="platformVersion" value="10.0.1" />
+		<parameter name="model" value="iPhone-7" />
+		<parameter name="deviceName" value="889F8D634819743C852A88983BF12C7FA74B3194" />
 		<parameter name="appID" value="com.clearchannel.iheartradio" />
     <classes>
       <class name="LiveRadioPackage.NewTest"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
+
