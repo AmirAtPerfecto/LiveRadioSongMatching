@@ -24,21 +24,25 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class ReportingFileDownload {
     // The Perfecto Continuous Quality Lab you work with
-    public static final String CQL_NAME = "demo";
+    //public static String CQL_NAME = "demo";
 
     // The reporting Server address depends on the location of the lab. Please refer to the documentation at
     // http://developers.perfectomobile.com/display/PD/Reporting#Reporting-ReportingserverAccessingthereports to find your relevant address
     // For example the following is used for US:
-    public static final String REPORTING_SERVER_URL = "https://" + CQL_NAME + ".reporting.perfectomobile.com";
+    public static String REPORTING_SERVER_URL;
 
     // See http://developers.perfectomobile.com/display/PD/Using+the+Reporting+Public+API on how to obtain an Offline Token
-    public static final String OFFLINE_TOKEN = "eyJhbGciOiJSUzI1NiJ9.eyJqdGkiOiI4MzY4MjFlYi0yNzhmLTQ0ZTgtOGRkZC1mNWM5NjJkY2Q1NTYiLCJleHAiOjAsIm5iZiI6MCwiaWF0IjoxNDkzMjMxNDUzLCJpc3MiOiJodHRwczovL2F1dGgucGVyZmVjdG9tb2JpbGUuY29tL2F1dGgvcmVhbG1zL2RlbW8iLCJhdWQiOiJvZmZsaW5lLXRva2VuLWdlbmVyYXRvciIsInN1YiI6ImY3MTgyMGY1LTY5YjYtNGJjOC05MjI1LTdiMGFmMjMzMWNkNiIsInR5cCI6Ik9mZmxpbmUiLCJhenAiOiJvZmZsaW5lLXRva2VuLWdlbmVyYXRvciIsInNlc3Npb25fc3RhdGUiOiI4NzFiZDYzMC0zZTQzLTQ0MDEtYTcwOS01YjgxZWVkODg2YmYiLCJjbGllbnRfc2Vzc2lvbiI6ImMzN2EyNDhlLWExNWQtNGJjMS1iYjEzLTU5ZTkzMzAxMDdhYiIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJ2aWV3LXByb2ZpbGUiXX19fQ.tH8YI2aNrJAnwGLLFsgp8K1A4_LwiwMcG-EI27UU8_pH0i14ifCLtmNiRG9OL1S4SQ_W1DYFRw56XBGOlaBauVDxBAuzY42dsQBiK3EpE3XPM9-QG_HHwJC9Msr8mheyfRgLeJwQ3hkqby4zOH3LdbANXAsGrwnQw8zmL8i9H_BlK43wUHxkaQDQ35fIsxZskSzJ4bvRLNayuKmnDUJb5rpjL3RPVHuEMx9DXHwRyE2UOBXts2oKsh6muzQY7oVDvoBi92u0L8lCrN6zN91CHLuefsRJkFHiBk14nrmsFlxWPhRzXIrHJzIUcwtkueDouWgsiGZLhbzQfW2ue3LTkw";
+    public static String OFFLINE_TOKEN;
 
-    public static final String CQL_SERVER_URL = "https://" + CQL_NAME + ".perfectomobile.com";
+    public static String CQL_SERVER_URL;
 
 
     public static void downloadAttachments() throws Exception {
-        // Retrieve a list of the test executions in your lab (as a json)
+    	OFFLINE_TOKEN = System.getenv().get("PERFECTO_CLOUD_SECURITY_TOKEN");
+    	CQL_SERVER_URL = "https://"+System.getenv().get("PERFECTO_CLOUD");
+    	REPORTING_SERVER_URL = "https://"+System.getenv().get("PERFECTO_CLOUD").toLowerCase().replace(".perfectomobile.com", ".reporting.perfectomobile.com");
+    	
+    	// Retrieve a list of the test executions in your lab (as a json)
         JsonObject executions = retrieveTestExecutions();
 
         JsonArray resources = executions.getAsJsonArray("resources");

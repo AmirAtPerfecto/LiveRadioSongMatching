@@ -67,6 +67,30 @@ public class NewTest {
     		  System.out.println("Not Found artist! web:" +artist);
   			
   			
+    	  
+    	 // String attribute3 = driver.findElementByName("//*[@name=\"MiniPlayerView-TitleLabel-UILabel\"]").getAttribute("text");
+    	String songNameOnDevice = driver.findElementByXPath("//AppiumAUT/UIAApplication[1]/UIAWindow[1]/UIAElement[1]/UIAScrollView[1]/UIAElement[1]/UIAStaticText[1]").getText();  
+    	String artistNameOnDevice = driver.findElementByXPath("//AppiumAUT/UIAApplication[1]/UIAWindow[1]/UIAElement[1]/UIAScrollView[1]/UIAElement[1]/UIAStaticText[2]").getText();
+    	System.out.println("Song Name on Device:" +songNameOnDevice);  
+    	System.out.println("Artist Name on Device:" +artistNameOnDevice);  
+    	
+    	if (songData.toLowerCase().contains(songNameOnDevice.toLowerCase())){
+        	System.out.println("Song Name on Device matches actual song played!:" +songNameOnDevice);
+        	PerfectoUtils.comment(driver, "Song Name on Device matches actual song played!:" +songNameOnDevice);
+    	} else {
+        	System.out.println("Song Name on Device does not matche actual song played!:" +songNameOnDevice);
+        	PerfectoUtils.comment(driver, "Song Name on Device does not matche actual song played!:" +songNameOnDevice);
+    	}
+    	if (songData.toLowerCase().contains(artistNameOnDevice.toLowerCase())){
+        	System.out.println("Artists Name on Device matches actual song played!:" +songNameOnDevice);
+        	PerfectoUtils.comment(driver, "Artists Name on Device matches actual song played!:" +songNameOnDevice);
+    	} else {
+        	System.out.println("Artists Name on Device does not matche actual song played!:" +songNameOnDevice);
+        	PerfectoUtils.comment(driver, "Artists Name on Device does not matche actual song played!:" +songNameOnDevice);
+    	}
+    		
+    	  
+    	  
 
           // write your code here
 

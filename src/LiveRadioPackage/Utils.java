@@ -23,13 +23,15 @@ public class Utils {
 	        DesiredCapabilities capabilities = new DesiredCapabilities(browserName, "", Platform.ANY);
 		    
 			// Set cloud host and credentials values from CI, else use local values
-			String PERFECTO_HOST = System.getProperty("np.testHost", System.getenv().get("PERFECTO_CLOUD"));
-			String PERFECTO_USER = System.getProperty("np.testUsername", System.getenv().get("PERFECTO_CLOUD_USERNAME"));
-			String PERFECTO_PASSWORD = System.getProperty("np.testPassword", System.getenv().get("PERFECTO_CLOUD_PASSWORD"));
+			String PERFECTO_HOST = System.getenv().get("PERFECTO_CLOUD");
+//			String PERFECTO_USER = System.getenv().get("PERFECTO_CLOUD_USERNAME");
+//			String PERFECTO_PASSWORD = System.getenv().get("PERFECTO_CLOUD_PASSWORD");
+			String PERFECTO_SECURITY_TOKEN = System.getenv().get("PERFECTO_CLOUD_SECURITY_TOKEN");
 			
 			String host = PERFECTO_HOST;
-			capabilities.setCapability("user", PERFECTO_USER);
-			capabilities.setCapability("password", PERFECTO_PASSWORD);
+			//capabilities.setCapability("user", PERFECTO_USER);
+			//capabilities.setCapability("password", PERFECTO_PASSWORD);
+			capabilities.setCapability("securityToken", PERFECTO_SECURITY_TOKEN);
 	        //TODO: Change your device ID
 	        capabilities.setCapability("platformName", platformName);
 	        capabilities.setCapability("platformVersion", platformVersion);
@@ -75,13 +77,15 @@ public class Utils {
 			String browserVersion, String screenResolution) throws MalformedURLException {
 	    
 		// Set cloud host and credentials values from CI, else use local values
-		String PERFECTO_HOST = System.getProperty("np.testHost", System.getenv().get("PERFECTO_CLOUD"));
-		String PERFECTO_USER = System.getProperty("np.testUsername", System.getenv().get("PERFECTO_CLOUD_USERNAME"));
-		String PERFECTO_PASSWORD = System.getProperty("np.testPassword", System.getenv().get("PERFECTO_CLOUD_PASSWORD"));
+		String PERFECTO_HOST = System.getenv().get("PERFECTO_CLOUD");
+//		String PERFECTO_USER = System.getenv().get("PERFECTO_CLOUD_USERNAME");
+//		String PERFECTO_PASSWORD = System.getenv().get("PERFECTO_CLOUD_PASSWORD");
+		String PERFECTO_SECURITY_TOKEN = System.getenv().get("PERFECTO_CLOUD_SECURITY_TOKEN");
 		
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability("user", PERFECTO_USER);
-		capabilities.setCapability("password", PERFECTO_PASSWORD);
+		//capabilities.setCapability("user", PERFECTO_USER);
+		//capabilities.setCapability("password", PERFECTO_PASSWORD);
+		capabilities.setCapability("securityToken", PERFECTO_SECURITY_TOKEN);
 		capabilities.setCapability("platformName", platformName);
 		capabilities.setCapability("platformVersion", platformVersion);
 		capabilities.setCapability("browserName", browserName);
