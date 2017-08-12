@@ -32,7 +32,6 @@ public class NewTest {
                 .withContextTags("tag1")
                 .withWebDriver(driver)
                 .build();
-		webDriver = Utils.getRemoteWebDriver("Windows", "10", "Chrome", "58", "1280x1024" );        
          reportiumClient = new ReportiumClientFactory().createPerfectoReportiumClient(perfectoExecutionContext);
 // Only for Mac!
          System.load(System.getenv().get("Project_Path")+ "libacrcloud_extr_tool.dylib");
@@ -41,66 +40,64 @@ public class NewTest {
   public void test() {
       try {
     	  reportiumClient.testStart("Live Radio", new TestContext("tag2", "tag3"));
-    	  System.out.println("Yay");
-
-    	  // Load the website, get the details for the live stream there
-    	  webDriver.get("http://kiss108.iheart.com/");
-    	  webDriver.findElementByClassName("listen-live-svg").click();
     	  
     	  // Start recording from the device
     	  String audioFileRecording = PerfectoUtils.startAudioRecording(driver);
     	  // grab meta data from device
     	  Thread.sleep(15000);
-    	  
+    	     	  
     	  PerfectoUtils.stopAudioRecording(driver);
-    	  String songNameOnDevice = driver.findElementByXPath("//AppiumAUT/UIAApplication[1]/UIAWindow[1]/UIAElement[1]/UIAScrollView[1]/UIAElement[1]/UIAStaticText[1]").getText();  
-    	  String artistNameOnDevice = driver.findElementByXPath("//AppiumAUT/UIAApplication[1]/UIAWindow[1]/UIAElement[1]/UIAScrollView[1]/UIAElement[1]/UIAStaticText[2]").getText();
+    	  String songNameOnDevice = driver.findElementByXPath("//AppiumAUT/UIAApplication[1]/UIAWindow[1]/UIAElement[3]/UIAScrollView[1]/UIAElement[1]/UIAStaticText[1]").getText();  
+    	  String artistNameOnDevice = driver.findElementByXPath("//AppiumAUT/UIAApplication[1]/UIAWindow[1]/UIAElement[3]/UIAScrollView[1]/UIAElement[1]/UIAStaticText[2]").getText();
     	  System.out.println("Song Name on Device:" +songNameOnDevice);  
     	  System.out.println("Artist Name on Device:" +artistNameOnDevice);  
     	  Thread.sleep(5000);
-    	  // Grab the meta data from the website
-    	  String songNameOnWeb = webDriver.findElementByClassName("player-song").getAttribute("title");
-    	  String artistNameOnWeb = webDriver.findElementByClassName("player-artist").getAttribute("title");
-    	  ReportingFileDownload.downloadAttachments();
-    	  String songData = AudioFunctions.audioToText(audioFileRecording);
+
+    	  // Detect the song
+    	  String songData = AudioFunctions.detectSong(audioFileRecording);
     	  System.out.println("Song Data: " +songData);
     	  System.out.println("Audio File: " +audioFileRecording);
 
     	    			
+// Let's have fun with Shazam
+    	  AudioFunctions.uploadSongToRepository();
+    	  try {
+			PerfectoUtils.closeApp(driver, "Shazam");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	  Thread.sleep(500);
+    	  PerfectoUtils.launchApp(driver, "Shazam");
     	  
-  			
-    	
-    	if (songData.toLowerCase().contains(songNameOnDevice.toLowerCase())){
-        	System.out.println("Song Name on Device matches actual song played!:" +songNameOnDevice);
-        	PerfectoUtils.comment(driver, "Song Name on Device matches actual song played!:" +songNameOnDevice);
-    	} else {
-        	System.out.println("Song Name on Device does not matche actual song played!:" +songNameOnDevice);
-        	PerfectoUtils.comment(driver, "Song Name on Device does not matche actual song played!:" +songNameOnDevice);
-    	}
-    	if (songData.toLowerCase().contains(artistNameOnDevice.toLowerCase())){
-        	System.out.println("Artists Name on Device matches actual song played!:" +songNameOnDevice);
-        	PerfectoUtils.comment(driver, "Artists Name on Device matches actual song played!:" +songNameOnDevice);
-    	} else {
-        	System.out.println("Artists Name on Device does not matche actual song played!:" +songNameOnDevice);
-        	PerfectoUtils.comment(driver, "Artists Name on Device does not matche actual song played!:" +songNameOnDevice);
-    	}
-    		
-/* if web stream matches mobile    	  
-  	  if (songData.toLowerCase().contains(songNameOnWeb.toLowerCase()))
-		  System.out.println("Found Song! " +songNameOnWeb);
-	  else
-		  System.out.println("Not Found Song! web:" +songNameOnWeb);
+    	  PerfectoUtils.ocrTextCheck(driver, "Discover", 95, 20);
+    	  PerfectoUtils.ocrImageSelect(driver, "PUBLIC:Amir/Shazam_icon.png");
+    	  
+    	  Thread.sleep(500);
+    	  PerfectoUtils.injectAudio(driver, System.getenv().get("PERFECTO_CLOUD_REPOSITORY_KEY")+ "song.wav");
+    	  
+    	  // Let's wait until the song is detected
+    	  PerfectoUtils.ocrTextCheck(driver, "Buy", 99, 20);
+    	  Thread.sleep(1000);
+    	  
+    	  // We need to go to "My Shazam" to find the song that was detected..
+    	  driver.findElementByXPath("//*[@label=\"navigation back\"]").click();
+    	  
+    	  
+    	  PerfectoUtils.ocrTextCheck(driver, "Discover", 99, 20);
+    	  
+    	  PerfectoUtils.swipe(driver, "10%", "10%", "90%", "10%");
+    	  
+    	  PerfectoUtils.ocrTextCheck(driver, "save", 99, 20);
+    	  String attribute1 = driver.findElementByXPath("//AppiumAUT/UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIATableView[1]/UIATableCell[1]/UIAStaticText[1]").getAttribute("text");
+    	  String attribute2 = driver.findElementByXPath("//AppiumAUT/UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIATableView[1]/UIATableCell[1]/UIAStaticText[2]").getAttribute("text");
 
-	  if (songData.toLowerCase().contains(artistNameOnWeb.toLowerCase()))
-		  System.out.println("Found artist! " +artistNameOnWeb);
-	  else
-		  System.out.println("Not Found artist! web:" +artistNameOnWeb);
-*/   	  
-
-          // write your code here
-
-          // reportiumClient.testStep("step1"); // this is a logical step for reporting
-          // reportiumClient.testStep("step2");
+    	  System.out.println("Song Name on Device:" +songNameOnDevice);  
+    	  System.out.println("Artist Name on Device:" +artistNameOnDevice);  
+    	  System.out.println("Shazam Song name " + attribute1);
+    	  System.out.println("Shazam Artist name " + attribute2);
+    	  
+    	  
 
           reportiumClient.testStop(TestResultFactory.createSuccess());
       } catch (Exception e) {
