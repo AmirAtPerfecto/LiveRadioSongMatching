@@ -5,8 +5,9 @@ This project opens a device (iOS) and web browser and
 1- record a song from iHeart radio application (20 seconds)
 2- recognize the song (using ACRCloud.com APIs)
 3- extract from the device the presented song name and artist name
-4- extract from the web browser the artist and song names
+4- (optional, iHeart does not seem to have a public feed) extract from the web browser the artist and song names
 5- compare that against the song meta data as provided back from ACRCloud (step 2)
+6- Feed the recording into Shazam and compare the result
 
 
 
@@ -20,6 +21,8 @@ Please note: after 10.3 the following are not used:
 PERFECTO_CLOUD_USERNAME
 
 PERFECTO_CLOUD_PASSWORD
+
+PERFECTO_CLOUD_REPOSITORY_KEY
 
 
 
